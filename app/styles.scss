@@ -1,0 +1,109 @@
+body {
+  background-color: #fefefe;
+  font-family: "Avenir", "Helvetica", "Arial", sans-serif;
+}
+
+@import 'math-helpers';
+
+@mixin add-animation($deg, $line-height, $delay) {
+  $name: unique-id();
+  animation: 10s linear (- $delay + s) infinite alternate #{$name};
+
+  @keyframes #{$name} {
+    0% {
+      transform: rotate($deg) scale(0, 1);
+    }
+
+    25% {
+      transform: rotate($deg) scale(0, 1);
+    }
+
+    75% {
+      transform: rotate($deg) scale($line-height, 1);
+    }
+
+    100% {
+      transform: rotate($deg) scale($line-height, 1);
+    }
+  }
+}
+
+@mixin add-triangle($line-height, $line-width, $more, $delay) {
+  $inner-width: $line-width - $more;
+  $offset-x: sin(60deg) * $inner-width / 2;
+  $offset-y: ($inner-width / 2) - (cos(60deg) * $inner-width / 2);
+
+  div {
+    background-color: black;
+    height: $line-height + rem;
+    margin: 0 auto;
+    width: 1rem; // does not matter anyway
+
+    &:nth-child(1) {
+      @include add-animation(0deg, $line-width, $delay);
+    }
+
+    &:nth-child(2) {
+      @include add-animation(60deg, $line-width, $delay);
+      position: relative;
+      right: - $offset-y + rem;
+      top: - ($offset-x + $line-height) + rem;
+    }
+
+    &:nth-child(3) {
+      @include add-animation(-60deg, $line-width, $delay);
+      left: - $offset-y + rem;
+      position: relative;
+      top: - ($offset-x + 2 * $line-height) + rem;
+    }
+  }
+}
+
+
+#one {
+  @include add-triangle(.1, 30, .05, 1);
+}
+
+#two {
+  @include add-triangle(.1, 27, .05, 2);
+}
+
+#three {
+  @include add-triangle(.1, 24, .05, 3);
+}
+
+#four {
+  @include add-triangle(.1, 21, .05, 4);
+}
+
+#five {
+  @include add-triangle(.1, 18, .05, 5);
+}
+
+#six {
+  @include add-triangle(.1, 15, .05, 6);
+}
+
+#seven {
+  @include add-triangle(.1, 12, .05, 7);
+}
+
+#eight {
+  @include add-triangle(.1, 9, .05, 8);
+}
+
+#nine {
+  @include add-triangle(.1, 6, .05, 9);
+}
+
+#ten {
+  @include add-triangle(.1, 3, .05, 10);
+}
+
+.filter-animation {
+  padding-top: 20rem;
+
+  > div {
+    margin-bottom: .5rem;
+  }
+}
